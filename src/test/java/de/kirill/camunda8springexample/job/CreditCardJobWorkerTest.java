@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CreditCardJobWorkerTest {
 
     @Autowired
-    private ZeebeClient zeebe;
+    private ZeebeClient zeebe; // TODO: Intellij shows error
 
     @Autowired
     private ZeebeTestEngine zeebeTestEngine; // TODO: Intellij shows error
