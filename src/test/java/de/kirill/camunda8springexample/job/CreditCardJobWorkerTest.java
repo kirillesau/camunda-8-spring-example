@@ -32,17 +32,17 @@ class CreditCardJobWorkerTest {
 
     @Test
     void creditCardShouldBeCharged() {
-        CreditCardVariables cardVariables = new CreditCardVariables("C8_12345", "100.00", "1234567812345678", "12/2023", "123");
+        CreditCardVariables creditCardVariables = new CreditCardVariables("C8_12345", 100.00, "1234567812345678", "12/2023", "123");
 
         // start a process instance
         ProcessInstanceEvent processInstance = zeebe.newCreateInstanceCommand() //
                 .bpmnProcessId("paymentProcess").latestVersion() //
-                .variables(cardVariables) //
+                .variables(creditCardVariables) //
                 .send().join();
 
         waitForProcessInstanceCompleted(processInstance);
 
-        Mockito.verify(creditCardService).chargeCreditCard();
+        Mockito.verify(creditCardService).chargeCreditCard(creditCardVariables);
         Mockito.verifyNoMoreInteractions(creditCardService);
 
         assertThat(processInstance)
