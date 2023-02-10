@@ -1,14 +1,18 @@
 # Camunda 8 with Spring Boot example
-For this example, I am using the [camunda-community-hub](https://github.com/camunda-community-hub) approach as described [here](https://github.com/camunda-community-hub/spring-zeebe).
+
+For this example, I am using the [camunda-community-hub](https://github.com/camunda-community-hub) approach as
+described [here](https://github.com/camunda-community-hub/spring-zeebe).
 
 ## Prerequisite
 
-The example requires a [Camunda account](https://docs.camunda.io/docs/next/guides/getting-started/) with access to the [Camunda Platform Console](https://docs.camunda.io/docs/components/console/introduction-to-console/).
+The example requires a [Camunda account](https://docs.camunda.io/docs/next/guides/getting-started/) with access to
+the [Camunda Platform Console](https://docs.camunda.io/docs/components/console/introduction-to-console/).
 
 ## How to run
 
 ### Maven
->Note: You can only run it if the credentials have been filled in correctly! See [Modify application.properties
+
+> Note: You can only run it if the credentials have been filled in correctly! See [Modify application.properties
 ](README.md#modify-applicationproperties)
 
 ```shell
@@ -26,7 +30,9 @@ After that instances can be started with the following variable content:
   "cardCVC": "123"
 }
 ````
-See the [official guide](https://docs.camunda.io/docs/components/modeler/web-modeler/start-instance/) for further information. 
+
+See the [official guide](https://docs.camunda.io/docs/components/modeler/web-modeler/start-instance/) for further
+information.
 
 The terminal will show the following output:
 
@@ -41,8 +47,14 @@ The terminal will show the following output:
 ````
 
 ## Implementation tips
+
 ### Modify application.properties
-Fill the [application.properties](src/main/resources/application.properties)-File with your individual values. Client credentials can be generated in the Camunda 8 Console. See [Set up client connection credentials](https://docs.camunda.io/docs/guides/setup-client-connection-credentials/) for further information.
+
+Fill the [application.properties](src/main/resources/application.properties)-File with your individual values. Client
+credentials can be generated in the Camunda 8 Console.
+See [Set up client connection credentials](https://docs.camunda.io/docs/guides/setup-client-connection-credentials/) for
+further information.
+
 ```properties
 zeebe.client.cloud.region=<your region>
 zeebe.client.cloud.clusterId=<your cluster id>
@@ -51,6 +63,7 @@ zeebe.client.cloud.clientSecret=<your client secret>
 ```
 
 ### Modify pom.xml
+
 Add additional dependencies in your pom.xml:
 
 ```xml
@@ -59,22 +72,22 @@ Add additional dependencies in your pom.xml:
     ...
     <spring-zeebe.version>8.1.5</spring-zeebe.version>
 </properties>
-...
+        ...
 <dependencies>
 ...
-  <dependency>
-      <groupId>io.camunda</groupId>
-      <artifactId>spring-zeebe-starter</artifactId>
-      <version>${spring-zeebe.version}</version>
-  </dependency>
-  <dependency>
-      <groupId>io.camunda</groupId>
-      <artifactId>spring-zeebe-test</artifactId>
-      <version>${spring-zeebe.version}</version>
-      <scope>test</scope>
-  </dependency>
-</dependencies>  
-...
+<dependency>
+    <groupId>io.camunda</groupId>
+    <artifactId>spring-zeebe-starter</artifactId>
+    <version>${spring-zeebe.version}</version>
+</dependency>
+<dependency>
+    <groupId>io.camunda</groupId>
+    <artifactId>spring-zeebe-test</artifactId>
+    <version>${spring-zeebe.version}</version>
+    <scope>test</scope>
+</dependency>
+</dependencies>
+        ...
 ```
 
 ### Modify Application-class
@@ -99,6 +112,7 @@ public class ExampleApplication {
 }
 
 ```
+
 ### Add a new bmpn file
 
 Add your .bmpn file to [resources](src/main/resources).
@@ -116,7 +130,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ExampleWorker {
-    
+
     // simple worker
     @JobWorker(type = "exampleType")
     public void handle(final ActivatedJob job) {
@@ -128,13 +142,13 @@ public class ExampleWorker {
     public void handle2(final ActivatedJob job, @Variable String variableName) {
         // implement your code here
     }
-    
+
     // worker with x variables as object
     @JobWorker(type = "exampleType3")
     public void handle3(final ActivatedJob job, @VariablesAsType MyCustomObject customObject) {
         // implement your code here
     }
-    
+
 }
 ```
 
