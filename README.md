@@ -116,9 +116,9 @@ public class ExampleApplication {
 
 ```
 
-### Add a new bmpn file
+### Add a new bpmn file
 
-Add your .bmpn file to [resources](src/main/resources).
+Add your .bpmn file to [resources](src/main/resources).
 
 See [CreditCardProcess.bpmn](src/main/resources/CreditCardProcess.bpmn) for example.
 
