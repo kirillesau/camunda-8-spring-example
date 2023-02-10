@@ -2,6 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![master](https://img.shields.io/github/last-commit/badges/shields/master)
 [![Java CI with Maven](https://github.com/kirillesau/camunda-8-spring-example/actions/workflows/build%20with%20maven.yml/badge.svg?branch=master)](https://github.com/kirillesau/camunda-8-spring-example/actions/workflows/build%20with%20maven.yml)
+
 For this example, I am using the [camunda-community-hub](https://github.com/camunda-community-hub) approach as
 described [here](https://github.com/camunda-community-hub/spring-zeebe).
 
