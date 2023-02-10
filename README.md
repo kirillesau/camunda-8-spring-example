@@ -1,4 +1,9 @@
 # Camunda 8 with Spring Boot example
+For this example, I am using the [camunda-community-hub](https://github.com/camunda-community-hub) approach as described [here](https://github.com/camunda-community-hub/spring-zeebe).
+
+## Prerequisite
+
+The example requires a [Camunda account](https://docs.camunda.io/docs/next/guides/getting-started/) with access to the [Camunda Platform Console](https://docs.camunda.io/docs/components/console/introduction-to-console/).
 
 ## How to run
 
@@ -36,8 +41,6 @@ The terminal will show the following output:
 ````
 
 ## Implementation tips
-For this example, I am using the [camunda-community-hub](https://github.com/camunda-community-hub) approach as described [here](https://github.com/camunda-community-hub/spring-zeebe).
-
 ### Modify application.properties
 Fill the [application.properties](src/main/resources/application.properties)-File with your individual values. Client credentials can be generated in the Camunda 8 Console. See [Set up client connection credentials](https://docs.camunda.io/docs/guides/setup-client-connection-credentials/) for further information.
 ```properties
@@ -132,5 +135,51 @@ public class ExampleWorker {
         // implement your code here
     }
     
+}
+```
+
+### Testing
+
+```java
+import io.camunda.zeebe.client.ZeebeClient;
+import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
+import io.camunda.zeebe.process.test.api.ZeebeTestEngine;
+import io.camunda.zeebe.spring.test.ZeebeSpringTest;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import static io.camunda.zeebe.process.test.assertions.BpmnAssert.assertThat;
+import static io.camunda.zeebe.spring.test.ZeebeTestThreadSupport.waitForProcessInstanceCompleted;
+
+@SpringBootTest
+@ZeebeSpringTest
+class ExampleTest {
+
+    @Autowired
+    private ZeebeClient zeebe;
+
+    @Autowired
+    private ZeebeTestEngine zeebeTestEngine;
+
+    @Test
+    void creditCardShouldBeCharged() {
+        MyObject myObjectVariables = new MyObject();
+
+        // start a process instance
+        ProcessInstanceEvent processInstance = zeebe.newCreateInstanceCommand() //
+                .bpmnProcessId("paymentProcess").latestVersion() //
+                .variables(myObjectVariables) //
+                .send().join();
+
+        // wait for process completion
+        waitForProcessInstanceCompleted(processInstance);
+
+        // assert that process is finished and my EndEvent is passed
+        assertThat(processInstance)
+                .hasPassedElement("My_EndEvent_Id")
+                .isCompleted();
+    }
 }
 ```
