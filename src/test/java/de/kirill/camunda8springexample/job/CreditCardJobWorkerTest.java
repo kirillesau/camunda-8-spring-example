@@ -3,7 +3,6 @@ package de.kirill.camunda8springexample.job;
 import de.kirill.camunda8springexample.service.CreditCardService;
 import io.camunda.zeebe.client.ZeebeClient;
 import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
-import io.camunda.zeebe.process.test.api.ZeebeTestEngine;
 import io.camunda.zeebe.spring.test.ZeebeSpringTest;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -20,9 +19,6 @@ class CreditCardJobWorkerTest {
 
     @Autowired
     private ZeebeClient zeebe; // TODO: Intellij shows error
-
-    @Autowired
-    private ZeebeTestEngine zeebeTestEngine; // TODO: Intellij shows error
 
     @MockBean
     private CreditCardService creditCardService;
